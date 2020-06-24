@@ -211,8 +211,8 @@ def create_status_message(data):
         "distanceInMeters": data["data"]["total_distance"],
         "averageSpeedMetersSeconds": data["data"]["speed"],
         "bpm": 3,
-        "powerLeft": new_data["data"]["power_sx"],
-        "powerRight": new_data["data"]["power_dx"]
+        "powerLeft": data["data"]["power_sx"],
+        "powerRight": data["data"]["power_dx"]
     }
     msg["payload"] = payload
     return json.dumps(msg)
