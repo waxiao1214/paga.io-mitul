@@ -1,0 +1,15 @@
+{
+  "short_name": "lllusio",
+  "name": "",
+  "icons": [
+    {
+      "src": "./splashscreen.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "rgba(1,30,95,1)",
+  "background_color": "rgba(1,30,95,1)"
+}

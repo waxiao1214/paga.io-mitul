@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+   <head>
+      <title> WebSocket: Echo Server </title>
+      <script>
+        function append(text) {
+          document.getElementById("eventi_websocket").insertAdjacentHTML(
+            'beforeend',
+            "<li>" + text + ";</li>"
+          );
+        }
+
+        var dataCounter = 0;
+        function handleIncomingData(data) {
+          if (data.startsWith("$PAGDATA")) {
+            document.getElementById("padata_count").value = dataCounter++;
+            return;
+          }
+
+          append(`<< ${data}`);
+        }
+
+        var backendWs = null;
+
+        function setup() {
+          var serverUrl = "ws://" + window.location.hostname + ":8765/status"
+          backendWs = new WebSocket(serverUrl);
+          backendWs.onmessage = function(event){
+            handleIncomingData(event.data);
+          }
+          backendWs.onopen = function() {
+            append("connessione effettuata")
+          }
+          backendWs.onclose = function() {
+            append("connessione chiusa");
+          }
+          backendWs.onerror = function(e) {
+            console.error("Errore: ", e);
+            append("errore nella connessione");
+          }
+        }
+
+        function sendCommand() {
+          var textbox = document.getElementById("pagaio_cmd");
+          if (!textbox || !backendWs) {
+            return;
+          }
+
+          backendWs.send(textbox.value);
+        }
+
+        window.onload = function() { setup(); }
+      </script>
+   </head>
+   <body>
+      <form>
+        <div>
+          <label for="pagaio_cmd">Comando:</label>
+          <input id="pagaio_cmd" type="text" name="text">
+          <input type="button" value="Invia"  accesskey="s" onClick="sendCommand()">
+        </div>
+      </form>
+      <h2>Statistiche</h2>
+      <label for="padata_count">Numero $PADATA ricevuti:</label>
+      <input id="padata_count" type="number" name="padata_count" disabled>
+      <h2>Log</h2>
+      <ul id="eventi_websocket"></ul>
+   </body>
+</html>
