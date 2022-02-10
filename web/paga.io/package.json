@@ -13,7 +13,7 @@
     "classnames": "^2.2.6",
     "dexie": "^3.0.1",
     "moment": "^2.24.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "qrcode.react": "^1.0.0",
     "react": "^16.13.0",
     "react-chartjs-2": "^2.9.0",
